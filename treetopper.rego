@@ -1,15 +1,9 @@
 package treetopper
 
 deny[message] {
-	not is_angel
-	not is_star
-	message := "input for topper was not one of the allowed values"
-}
-
-is_angel {
-	input == "angel"
-}
-
-is_star {
-	input == "star"
+	allowed_toppers := {"angel", "star"}
+	# if the input is not in the allowed list
+	allowed_toppers & {input} == set()
+	# bind the message to the following error
+	message := sprintf("input for treetopper was not in: %s", [allowed_toppers])
 }
