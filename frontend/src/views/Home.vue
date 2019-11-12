@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1>Home</h1>
+    <button v-on:click="tree.topper = 'star'">&#11088;</button>
+    <button v-on:click="tree.topper = 'angel'">&#128519;</button>
+    <button v-on:click="tree.topper = 'poop'">&#128169;</button>
+	<br/>
 	<Plotter class="ba" :tree="tree"/>
   </div>
 </template>

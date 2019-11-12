@@ -26,6 +26,9 @@ export default {
       if (this.tree.topper == "star") {
         topperString = String.fromCodePoint(11088);
       }
+      if (this.tree.topper == "poop") {
+        topperString = String.fromCodePoint(128169);
+      }
 
       ctx.fillText(topperString, treeTop[0]-15, treeTop[1]-5);
 
