@@ -22,6 +22,7 @@ export default {
       ctx.fillText(String.fromCodePoint(128519), 30, 50);
 
 		var outline = this.transformOutline(this.tree.outline);
+		outline.push(outline[0]);
 		for (var i = 0; i < outline.length - 1; i++) {
 		  ctx.moveTo(outline[i][0],outline[i][1]);
 		  ctx.lineTo(outline[i+1][0],outline[i+1][1]);
