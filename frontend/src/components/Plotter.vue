@@ -5,18 +5,43 @@
 <script>
 
 export default {
-  props: ['tree'],
+  props: ["tree", "cursor", "width", "height", "scaleFactor"],
   data() {
-	  return {
-		  ctx: null,
-		  width: 500,
-		  height: 600,
-		  scaleFactor: 100,
-	  };
+	  return { ctx: null };
   },
-  mounted() { this.ctx = this.$el.getContext('2d'); },
+  mounted() {
+	var canvas = this.$el;
+	var component = this;
+    this.$el.addEventListener('mousemove', function(evt) {
+      var rect = canvas.getBoundingClientRect();
+      var cursorPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+	  component.$emit("mousemove", cursorPos);
+    }, false);
+    this.$el.addEventListener('click', function(evt) {
+      var rect = canvas.getBoundingClientRect();
+      var cursorPos = { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
+	  component.$emit("clicked", cursorPos);
+    }, false);
+	this.ctx = canvas.getContext('2d');
+  },
   methods: {
     draw: function(ctx) {
+      // draw cursor
+      ctx.font = "10px Arial";
+      ctx.fillStyle = "#ccc";
+      ctx.fillText(String.fromCodePoint(10060), this.cursor.x-5, this.cursor.y+5);
+
+		for (var i = 0; i < this.width; i+=this.scaleFactor) {
+			for (var j = 0; j < this.height; j+=this.scaleFactor) {
+      			ctx.fillText("x", i, j);
+			}
+		}
+
+	  // don't render if missing outline
+		if (this.tree.outline.length == 0) {
+			return
+		}
+
       ctx.font = "30px Arial";
       var outline = this.transformOutline(this.tree.outline);
 
@@ -31,6 +56,7 @@ export default {
       }
 
       ctx.fillText(topperString, treeTop[0]-15, treeTop[1]-5);
+
 
       // add a point to complete the shape
       outline.push(outline[0]);
