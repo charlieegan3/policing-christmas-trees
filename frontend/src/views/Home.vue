@@ -8,7 +8,7 @@
     <br/>
     <button v-on:click="validate">Validate</button>
 	<p v-if="validation.valid">Your tree is allowed</p>
-	<p v-if="!validation.valid">Your tree is bad</p>
+	<p v-if="validation.valid == false">Your tree is bad</p>
 	<ul>
 	  <li v-for="message in validation.messages">
 		{{ message }}
