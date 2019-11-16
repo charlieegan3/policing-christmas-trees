@@ -19,7 +19,7 @@ test_invalid_tree_without_top {
 	# top point
 	outline := [
 		[1, 1],
-		[3, 1]
+		[1, 1]
 	]
 
 	output := deny with input as outline

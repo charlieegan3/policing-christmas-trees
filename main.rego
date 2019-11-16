@@ -10,7 +10,9 @@ deny[messages] {
 	data.tree.topper.deny[messages] with input as input.topper
 }
 
-output = [m | m := deny[_]]
+# this must be a set as outline can have many solutions
+# https://stackoverflow.com/questions/58895492/limit-opa-rego-to-a-single-rule-solution
+output = {m | m := deny[_]}
 
 validate = {
 	"valid": count(output) == 0,

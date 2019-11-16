@@ -7,29 +7,23 @@ deny[message] {
 
 deny[message] {
 	point_count := count(input)
-	left := array.slice(input, 0, round(point_count/2)-1)
-	right := array.slice(input, round(point_count/2), point_count)
-	top:= input[round(point_count/2)-1]
-	trace(sprintf("top %v", [top]))
+	max_index := count(input)-1
 
-	trace(sprintf("left %v", [left]))
-	trace(sprintf("right %v", [right]))
+	top:= input[round(max_index/2)]
+    some i
 
-	left_point := left[i]
-	right_point := right[count(right) -1 - i]
-	trace(sprintf("i %v", [i]))
+    index_a = i
+    index_b = (max_index-i)
+    point_a := input[index_a]
+    point_b := input[index_b]
 
-	trace(sprintf("l %v", [left_point]))
-	trace(sprintf("r %v", [right_point]))
-
-
-	transform := top[0] - left_point[0]
+	transform := top[0] - point_a[0]
 	trace(sprintf("t %v", [transform]))
 	trace(sprintf("expect x %v", [top[0] + transform]))
-	trace(sprintf("expect y %v", [left_point[1]]))
+	trace(sprintf("expect y %v", [point_a[1]]))
 
-	valid_y := right_point[1] == left_point[1]
-	valid_x := right_point[0] == top[0] + transform
+	valid_y := point_b[1] == point_a[1]
+	valid_x := point_b[0] == top[0] + transform
 
 	{ false } & { valid_y, valid_x } != set()
 

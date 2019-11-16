@@ -64,4 +64,3 @@ test_ensure_message_appears_once {
 		"messages": ["outline is asymetrical"]
 	}
 }
-
