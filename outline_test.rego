@@ -1,30 +1,30 @@
-package outline
+package tree.outline
 
 import data.test_utils as test
 
-# test_simple_triangle_tree {
-# 	# simple triangle is the most basic permitted outline
-# 	outline := [
-# 		[1, 1],
-# 		[2, 2],
-# 		[3, 1]
-# 	]
-#
-# 	output := deny with input as outline
-# 	test.assert_allowed_and_trace(output)
-# }
-#
-# test_invalid_tree_without_top {
-# 	# an outline with an even number of points is invalid since the tree has no
-# 	# top point
-# 	outline := [
-# 		[1, 1],
-# 		[3, 1]
-# 	]
-#
-# 	output := deny with input as outline
-# 	test.assert_denied_and_trace(output, "outline missing single central point")
-# }
+test_simple_triangle_tree {
+	# simple triangle is the most basic permitted outline
+	outline := [
+		[1, 1],
+		[2, 2],
+		[3, 1]
+	]
+
+	output := deny with input as outline
+	test.assert_allowed_and_trace(output)
+}
+
+test_invalid_tree_without_top {
+	# an outline with an even number of points is invalid since the tree has no
+	# top point
+	outline := [
+		[1, 1],
+		[3, 1]
+	]
+
+	output := deny with input as outline
+	test.assert_denied_and_trace(output, "outline missing single central point (found 2 points)")
+}
 
 test_symetrical_tree_is_allowed {
 	outline := [

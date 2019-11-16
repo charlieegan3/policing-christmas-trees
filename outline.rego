@@ -1,8 +1,8 @@
-package outline
+package tree.outline
 
 deny[message] {
 	count(input) % 2 == 0
-	message := "outline missing single central point"
+	message := sprintf("outline missing single central point (found %d points)", [count(input)])
 }
 
 deny[message] {
@@ -31,7 +31,8 @@ deny[message] {
 	valid_y := right_point[1] == left_point[1]
 	valid_x := right_point[0] == top[0] + transform
 
-	{false} & {valid_y, valid_x} != set()
+	{ false } & { valid_y, valid_x } != set()
 
 	message := "outline is asymetrical"
+	trace(sprintf("Message set to %v", [message]))
 }
