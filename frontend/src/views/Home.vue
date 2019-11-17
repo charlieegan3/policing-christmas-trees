@@ -15,14 +15,26 @@
 	  </li>
 	</ul>
     <br/>
-	<Plotter class="ba"
-			 :width="height"
-			 :height="height"
-			 :scaleFactor="gridSize"
-			 :tree="tree"
-			 :cursor="cursor"
-			 @mousemove="updateCursor"
-			 @clicked="addPoint"/>
+	<p>PlotMode: {{ plottingMode }}</p>
+	<button v-on:click="plottingMode = 'tree'">tree</button>
+	<button v-on:click="plottingMode = 'tinsel'">tinsel</button>
+    <br/>
+	<div>
+		<div class="dib fl">
+			<Plotter class="ba"
+					 :width="height"
+					 :height="height"
+					 :scaleFactor="gridSize"
+					 :tree="tree"
+					 :cursor="cursor"
+					 @mousemove="updateCursor"
+					 @clicked="addPoint"/>
+		</div>
+		<div class="f7 fl">
+			<textarea rows="50">{{ JSON.stringify(this.tree, null, 2) }}</textarea>
+		</div>
+	</div>
+
   </div>
 </template>
 
@@ -38,6 +50,7 @@ export default {
 		gridSize: 40,
 		tree: {
 			topper: "star",
+			tinsels: [ ],
 			outline: [
               [ 1, 1.5 ],
               [ 4, 4.5 ],
@@ -53,6 +66,7 @@ export default {
 			],
 		},
 		cursor: {x: 1, y: 1},
+		plottingMode: "tree",
 		validation: {
 			valid: null,
 			messages: []
@@ -65,11 +79,27 @@ export default {
 		this.cursor.y = this.roundValue(value.y)
 	},
 	addPoint: function(value) {
-		this.tree.outline.push([
-			this.roundValue(value.x) / this.gridSize,
-			(this.height - this.roundValue(value.y)) / this.gridSize,
-		])
-		console.log(this.tree.outline)
+		if (this.plottingMode == "tree") {
+			this.tree.outline.push([
+				this.roundValue(value.x) / this.gridSize,
+				(this.height - this.roundValue(value.y)) / this.gridSize,
+			])
+		} else if (this.plottingMode == "tinsel") {
+			var tinsels = this.tree.tinsels;
+			var point = [this.roundValue(value.x) / this.gridSize,
+						(this.height - this.roundValue(value.y)) / this.gridSize]
+			if (tinsels.length == 0) {
+				tinsels.push([point])
+			} else {
+				if (tinsels[tinsels.length-1].length < 2) {
+					tinsels[tinsels.length-1].push(point)
+				} else {
+					tinsels.push([point])
+				}
+			}
+			this.tree.tinsels = tinsels;
+			console.log(this.tree.tinsels)
+		}
 	},
 	roundValue: function(value) {
 	  return Math.round(value / this.gridSize) * this.gridSize;

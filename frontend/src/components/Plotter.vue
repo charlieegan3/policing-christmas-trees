@@ -57,8 +57,10 @@ export default {
 
       ctx.fillText(topperString, treeTop[0]-15, treeTop[1]-5);
 
-
       // add a point to complete the shape
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "green";
+      ctx.beginPath();
       outline.push(outline[0]);
       for (var i = 0; i < outline.length - 1; i++) {
         ctx.moveTo(outline[i][0],outline[i][1]);
@@ -66,17 +68,41 @@ export default {
         ctx.stroke();
       }
 
+      var tinsels = this.transformTinsels(this.tree.tinsels);
+      ctx.beginPath();
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = "red";
+      for (var i = 0; i < tinsels.length; i++) {
+		ctx.moveTo(tinsels[i][0][0],tinsels[i][0][1]);
+		ctx.lineTo(tinsels[i][1][0],tinsels[i][1][1]);
+		ctx.stroke();
+      }
     },
 	transformOutline: function(outline) {
 		var transformedOutline = [];
 		for (var i = 0; i < outline.length; i++) {
-			transformedOutline.push([
-				outline[i][0] * this.scaleFactor,
-				this.height - outline[i][1] * this.scaleFactor,
-			])
+			transformedOutline.push(this.transformPoint(outline[i]))
 		}
 		return transformedOutline
 	},
+	transformTinsels: function(tinsels) {
+		var transformedTinsels = [];
+		for (var i = 0; i < tinsels.length; i++) {
+			if (tinsels[i].length == 2) {
+				transformedTinsels.push([
+					this.transformPoint(tinsels[i][0]),
+					this.transformPoint(tinsels[i][1]),
+				]);
+			}
+		}
+		return transformedTinsels
+	},
+	transformPoint: function(point) {
+		return [
+			point[0] * this.scaleFactor,
+			this.height - point[1] * this.scaleFactor,
+		]
+	}
   },
   computed: {
     redraw() {
