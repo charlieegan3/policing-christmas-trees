@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="ph2">
     <h1>Policing Christmas Trees</h1>
     <div>
       <router-link class="router-link" to="/">Tree Builder</router-link>
