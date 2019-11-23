@@ -18,6 +18,7 @@
 	<p>PlotMode: {{ plottingMode }}</p>
 	<button v-on:click="plottingMode = 'tree'">tree</button>
 	<button v-on:click="plottingMode = 'tinsel'">tinsel</button>
+	<button v-on:click="plottingMode = 'bauble'">bauble</button>
     <br/>
 	<div>
 		<div class="dib fl">
@@ -51,6 +52,15 @@
 				</li>
 			</ul>
 		</div>
+		<div class="f7 fl">
+			<p>Baubles</p>
+			<ul>
+				<li v-for="bauble, index in tree.baubles">
+					{{ bauble }}
+    				<button v-on:click="tree.baubles.splice(index, 1)">X</button>
+				</li>
+			</ul>
+		</div>
 	</div>
 
   </div>
@@ -68,6 +78,7 @@ export default {
 		gridSize: 40,
 		tree: {
 			"topper": "star",
+			"baubles": [],
 			"tinsels": [
 				[ [ 1, 1.5 ], [ 10, 2.5 ] ], [ [ 2, 4.5 ], [ 9, 5.5 ] ], [ [ 4, 7.5 ], [ 7, 8.5 ] ]
 			],
@@ -94,6 +105,11 @@ export default {
 				this.roundValue(value.x) / this.gridSize,
 				(this.height - this.roundValue(value.y)) / this.gridSize,
 			])
+		} else if (this.plottingMode == "bauble") {
+			this.tree.baubles.push([
+				this.roundValue(value.x) / this.gridSize,
+				(this.height - this.roundValue(value.y)) / this.gridSize,
+			])
 		} else if (this.plottingMode == "tinsel") {
 			var tinsels = this.tree.tinsels;
 			var point = [this.roundValue(value.x) / this.gridSize,
@@ -108,14 +124,12 @@ export default {
 				}
 			}
 			this.tree.tinsels = tinsels;
-			console.log(this.tree.tinsels)
 		}
 	},
 	roundValue: function(value) {
 	  return Math.round(value / this.gridSize) * this.gridSize;
 	},
 	renderResponse: function(data) {
-		console.log(data);
 		this.validation.messages = data.messages;
 		this.validation.valid = data.valid;
 	},

@@ -43,7 +43,7 @@ export default {
 		}
 
       ctx.font = "30px Arial";
-      var outline = this.transformOutline(this.tree.outline);
+      var outline = this.transformPoints(this.tree.outline);
 
       var treeTop = outline[Math.floor(outline.length/2)];
 
@@ -77,8 +77,19 @@ export default {
 		ctx.lineTo(tinsels[i][1][0],tinsels[i][1][1]);
 		ctx.stroke();
       }
+
+		var baubles = this.transformPoints(this.tree.baubles);
+        var bauble = String.fromCodePoint(128302);
+		for (var i = 0; i < baubles.length; i++) {
+			ctx.save();
+			ctx.translate(baubles[i][0]+15, baubles[i][1]+5);
+			ctx.rotate(Math.PI);
+
+			ctx.fillText(bauble, 0, 0);
+			ctx.restore();
+		}
     },
-	transformOutline: function(outline) {
+	transformPoints: function(outline) {
 		var transformedOutline = [];
 		for (var i = 0; i < outline.length; i++) {
 			transformedOutline.push(this.transformPoint(outline[i]))
