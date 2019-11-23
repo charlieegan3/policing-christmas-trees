@@ -9,12 +9,20 @@
 		</p>
 		<p>
 			Draw
-			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'tree'}" v-on:click="plottingMode = 'tree'">&#127876; outline</button>
-			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'tinsel'}" v-on:click="plottingMode = 'tinsel'">&#10024; tinsel</button>
-			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'bauble'}" v-on:click="plottingMode = 'bauble'">&#128302; bauble</button>
+			<button v-bind:class="{ 'ba pa2 b--green': plottingMode == 'tree'}" v-on:click="plottingMode = 'tree'">&#127876; outline</button>
+			<button v-bind:class="{ 'ba pa2 b--green': plottingMode == 'tinsel'}" v-on:click="plottingMode = 'tinsel'">&#10024; tinsel</button>
+			<button v-bind:class="{ 'ba pa2 b--green': plottingMode == 'bauble'}" v-on:click="plottingMode = 'bauble'">&#128302; bauble</button>
 			<button v-on:click="tree.outline = []; tree.tinsels = []; tree.baubles = []">Clear</button>
 			<button v-on:click="validate">Validate</button>
+			<button v-on:click="showExamples = !showExamples">
+				{{ showExamples ? "Hide Examples" : "Examples" }}
+			</button>
 		</p>
+		<div v-if="showExamples">
+			<button v-for="t, name in examples" v-on:click="tree = t">
+				{{ name }}
+			</button>
+		</div>
 		<p v-if="validation.status != ''">
 			<img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif">
 			{{ validation.status }}
@@ -85,17 +93,15 @@ import axios from 'axios';
 
 export default {
 	name: 'home',
+	created() {
+		this.tree = this.examples.full;
+	},
 	data() {
 		return {
 			width: 500,
 			height: 500,
 			gridSize: 40,
-			tree: {
-				"topper": "star",
-				"baubles": [ [ 8, 7.5 ], [ 4, 7.5 ], [ 2, 4.5 ], [ 1, 1.5 ], [ 11, 1.5 ], [ 10, 4.5 ] ],
-				"tinsels": [ [ [ 1, 1.5 ], [ 10, 2.5 ] ], [ [ 2, 4.5 ], [ 9, 5.5 ] ], [ [ 4, 7.5 ], [ 7, 8.5 ] ] ],
-				"outline": [ [ 1, 1.5 ], [ 4, 4.5 ], [ 2, 4.5 ], [ 5, 7.5 ], [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ], [ 7, 7.5 ], [ 10, 4.5 ], [ 8, 4.5 ], [ 11, 1.5 ] ]
-			},
+			tree: { },
 			cursor: { x: 1, y: 1 },
 			plottingMode: "tree",
 			renderMode: "canvas",
@@ -104,6 +110,43 @@ export default {
 				status: "",
 				messages: []
 			},
+			showExamples: false,
+			examples: {
+				full: {
+					"topper": "star",
+					"baubles": [ [ 8, 7.5 ], [ 4, 7.5 ], [ 2, 4.5 ], [ 1, 1.5 ], [ 11, 1.5 ], [ 10, 4.5 ] ],
+					"tinsels": [ [ [ 1, 1.5 ], [ 10, 2.5 ] ], [ [ 2, 4.5 ], [ 9, 5.5 ] ], [ [ 4, 7.5 ], [ 7, 8.5 ] ] ],
+					"outline": [ [ 1, 1.5 ], [ 4, 4.5 ], [ 2, 4.5 ], [ 5, 7.5 ], [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ], [ 7, 7.5 ], [ 10, 4.5 ], [ 8, 4.5 ], [ 11, 1.5 ] ]
+				},
+				simple: {
+					"topper": "star",
+					"baubles": [], "tinsels": [],
+					"outline": [ [ 3, 2.5 ], [ 5, 7.5 ], [ 7, 2.5 ] ]
+				},
+				asym: {
+					"topper": "star",
+					"baubles": [], "tinsels": [],
+					"outline": [ [ 3, 3.5 ], [ 7, 10.5 ], [ 8, 3.5 ] ]
+				},
+				badBaubs: {
+					"topper": "star",
+					"baubles": [ [ 5, 7.5 ], [ 6, 9.5 ] ],
+					"tinsels": [],
+					"outline": [ [ 4, 4.5 ], [ 2, 4.5 ], [ 5, 7.5 ], [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ], [ 7, 7.5 ], [ 10, 4.5 ], [ 8, 4.5 ] ]
+				},
+				badTins: {
+					"topper": "star",
+					"baubles": [],
+					"tinsels": [ [ [ 5, 7.5 ], [ 9, 5.5 ] ], [ [ 2, 5.5 ], [ 7, 7.5 ] ] ],
+					"outline": [ [ 4, 4.5 ], [ 2, 4.5 ], [ 5, 7.5 ], [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ], [ 7, 7.5 ], [ 10, 4.5 ], [ 8, 4.5 ] ]
+				},
+				complex: {
+					"topper": "angel",
+					"baubles": [ [ 11, 10.5 ], [ 11, 9.5 ], [ 11, 8.5 ], [ 11, 7.5 ], [ 11, 6.5 ], [ 11, 5.5 ], [ 11, 4.5 ], [ 11, 3.5 ], [ 11, 1.5 ], [ 11, 2.5 ], [ 1, 10.5 ], [ 1, 1.5 ], [ 1, 2.5 ], [ 1, 3.5 ], [ 1, 4.5 ], [ 1, 4.5 ], [ 1, 5.5 ], [ 1, 6.5 ], [ 1, 7.5 ], [ 1, 9.5 ], [ 1, 8.5 ] ],
+					"tinsels": [ [ [ 2, 2.5 ], [ 10, 3.5 ] ], [ [ 2, 3.5 ], [ 10, 4.5 ] ], [ [ 2, 4.5 ], [ 10, 5.5 ] ], [ [ 2, 5.5 ], [ 10, 6.5 ] ], [ [ 2, 6.5 ], [ 10, 7.5 ] ], [ [ 2, 7.5 ], [ 10, 8.5 ] ], [ [ 2, 8.5 ], [ 10, 9.5 ] ], [ [ 2, 9.5 ], [ 10, 10.5 ] ] ],
+					"outline": [ [ 1, 1.5 ], [ 2, 2.5 ], [ 1, 2.5 ], [ 2, 3.5 ], [ 1, 3.5 ], [ 2, 4.5 ], [ 1, 4.5 ], [ 2, 5.5 ], [ 1, 5.5 ], [ 2, 6.5 ], [ 1, 6.5 ], [ 2, 7.5 ], [ 1, 7.5 ], [ 2, 8.5 ], [ 1, 8.5 ], [ 2, 9.5 ], [ 1, 9.5 ], [ 2, 10.5 ], [ 1, 10.5 ], [ 6, 11.5 ], [ 11, 10.5 ], [ 10, 10.5 ], [ 11, 9.5 ], [ 10, 9.5 ], [ 11, 8.5 ], [ 10, 8.5 ], [ 11, 7.5 ], [ 10, 7.5 ], [ 11, 6.5 ], [ 10, 6.5 ], [ 11, 5.5 ], [ 10, 5.5 ], [ 11, 4.5 ], [ 10, 4.5 ], [ 11, 3.5 ], [ 10, 3.5 ], [ 11, 2.5 ], [ 10, 2.5 ], [ 11, 1.5 ] ]
+				}
+			}
 		}
 	},
 	methods: {
