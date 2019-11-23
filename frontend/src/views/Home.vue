@@ -135,7 +135,7 @@ export default {
 	},
 	validate: function(value) {
 	  var app = this;
-      axios.post("http://localhost:8081/v0/data/tree/main/validate", this.tree)
+      axios.post("https://server.xmas-trees.charlieegan3.com/v0/data/tree/main/validate", this.tree)
         .then(function(response) {
 			app.renderResponse(response.data)
         })
