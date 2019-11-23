@@ -67,3 +67,15 @@ test_tinsel_off_outline_blocked_2 {
 	output := deny with input as tree # need the tree for the outline too
 	test.assert_denied_and_trace(output, "tinsel does not start and end on outline")
 }
+
+test_tinsel_with_outline_containing_dupes {
+	tree := {
+		"topper": "star",
+		"baubles": [],
+		"tinsels": [ [ [ 4, 7.5 ], [ 7, 8.5 ] ] ],
+		"outline": [ [ 3, 6.5 ], [ 6, 9.5 ], [ 9, 6.5 ], [ 9, 6.5 ] ]
+	}
+
+	output := deny with input as tree
+	test.assert_allowed_and_trace(output)
+}

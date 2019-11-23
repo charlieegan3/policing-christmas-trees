@@ -27,6 +27,9 @@ deny[message] {
 		outline_point_b := input.outline[i+1]
 		segment := [outline_point_a, outline_point_b]
 
+		# we make an assumption that the points are unique
+		outline_point_a != outline_point_b
+
 		# find the gradient of the outline segment
 		gradient := (outline_point_a[1] - outline_point_b[1]) /
 					(outline_point_a[0] - outline_point_b[0])
