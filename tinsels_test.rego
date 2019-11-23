@@ -30,5 +30,27 @@ test_tinsels_negative_gradient_blocked {
 	}
 
 	output := deny with input as tree # need the tree for the outline too
-	test.assert_denied_and_trace(output, "tinsel does not have positive gradient")
+	test.assert_denied_and_trace(output, "tinsel does not have positive gradient ([4, 4.5] [7, 2.5])")
+}
+
+test_tinsel_on_outline_allowed {
+	tree := {
+		"topper": "star",
+		"tinsels": [[ [ 2, 2.5 ], [ 5, 3.5 ] ]],
+		"outline": [ [ 2, 2.5 ], [ 4, 4.5 ], [ 6, 2.5 ] ]
+	}
+
+	output := deny with input as tree # need the tree for the outline too
+	test.assert_allowed_and_trace(output)
+}
+
+test_tinsel_off_outline_blocked {
+	tree := {
+		"topper": "star",
+		"tinsels": [ [ [ 2, 2.5 ], [ 6, 4.5 ] ] ],
+		"outline": [ [ 2, 2.5 ], [ 4, 4.5 ], [ 6, 2.5 ] ]
+	}
+
+	output := deny with input as tree # need the tree for the outline too
+	test.assert_denied_and_trace(output, "tinsel does not start and end on outline")
 }
