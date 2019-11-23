@@ -6,3 +6,6 @@ build_%:
 
 push_%: build_%
 	docker push $(PROJECT)-$*:$(TAG)
+
+test_server:
+	cd server && opa test *.rego -v --explain=notes
