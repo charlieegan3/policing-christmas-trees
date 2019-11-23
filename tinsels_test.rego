@@ -30,5 +30,5 @@ test_tinsels_negative_gradient_blocked {
 	}
 
 	output := deny with input as tree # need the tree for the outline too
-	test.assert_denied_and_trace(output, "tinsel has negative gradient")
+	test.assert_denied_and_trace(output, "tinsel does not have positive gradient")
 }
