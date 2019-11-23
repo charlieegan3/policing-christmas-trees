@@ -4,7 +4,7 @@
     <button v-on:click="tree.topper = 'star'">&#11088;</button>
     <button v-on:click="tree.topper = 'angel'">&#128519;</button>
     <button v-on:click="tree.topper = 'poop'">&#128169;</button>
-    <button v-on:click="tree.outline = []">Clear</button>
+    <button v-on:click="tree.outline = []; tree.tinsels = []">Clear</button>
     <br/>
     <button v-on:click="validate">Validate</button>
 	<p v-if="validation.valid">Your tree is allowed</p>
@@ -32,6 +32,24 @@
 		</div>
 		<div class="f7 fl">
 			<textarea rows="50">{{ JSON.stringify(this.tree, null, 2) }}</textarea>
+		</div>
+		<div class="f7 fl">
+			<p>Outline</p>
+			<ul>
+				<li v-for="point, index in tree.outline">
+					{{ point }}
+    				<button v-on:click="tree.outline.splice(index, 1)">X</button>
+				</li>
+			</ul>
+		</div>
+		<div class="f7 fl">
+			<p>Tinsels</p>
+			<ul>
+				<li v-for="tinsel, index in tree.tinsels">
+					{{ tinsel }}
+    				<button v-on:click="tree.tinsels.splice(index, 1)">X</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 
@@ -116,6 +134,7 @@ export default {
 			app.renderResponse(response.data)
         })
         .catch(function(error) {
+          app.validation.messages = ["Unable to validate"];
           console.log(error)
         });
 	}
