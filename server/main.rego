@@ -20,6 +20,8 @@ deny[messages] {
 # https://stackoverflow.com/questions/58895492/limit-opa-rego-to-a-single-rule-solution
 output = {m | m := deny[_]}
 
+# main entrypoint that forms part of the v0 path: /v0/data/tree/main/validate
+#                                                          tree.main validate
 validate = {
 	"valid": count(output) == 0,
 	"messages": sort(output)

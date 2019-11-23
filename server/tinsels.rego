@@ -1,5 +1,6 @@
 package tree.tinsels
 
+# check tinsel gradients
 deny[message] {
 	some tinsel
 	point_a := input.tinsels[tinsel][0]
@@ -8,6 +9,7 @@ deny[message] {
 	message := sprintf("tinsel does not have positive gradient (%v %v)", [point_a, point_b])
 }
 
+# check tinsels fall within the bound of the outline
 deny[message] {
 	# check tinsels
 	some t
@@ -48,7 +50,7 @@ deny[message] {
 	}
 
 	# if there are no matches
-	count(segment_matches ) == 0
+	count(segment_matches) == 0
 
 	message := "tinsel does not start and end on outline"
 }
