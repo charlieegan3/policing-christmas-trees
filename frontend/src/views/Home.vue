@@ -9,6 +9,7 @@
     <button v-on:click="validate">Validate</button>
 	<p v-if="validation.valid">Your tree is allowed</p>
 	<p v-if="validation.valid == false">Your tree is bad</p>
+	<p>{{ validation.status }}</p>
 	<ul>
 	  <li v-for="message in validation.messages">
 		{{ message }}
@@ -90,6 +91,7 @@ export default {
 		plottingMode: "tree",
 		validation: {
 			valid: null,
+			status: "",
 			messages: []
 		},
 	}
@@ -134,16 +136,25 @@ export default {
 		this.validation.valid = data.valid;
 	},
 	validate: function(value) {
+	  this.validation.status = "awaiting validation response";
 	  var app = this;
       axios.post("https://server.xmas-trees.charlieegan3.com/v0/data/tree/main/validate", this.tree)
         .then(function(response) {
 			app.renderResponse(response.data)
+	  app.validation.status = "";
         })
         .catch(function(error) {
           app.validation.messages = ["Unable to validate"];
+	  app.validation.status = "error";
           console.log(error)
         });
 	}
+  },
+  watch: {
+	  tree: {
+		  handler: function() { this.validate() },
+		  deep: true
+	  }
   },
   components: { Plotter }
 }
