@@ -1,9 +1,8 @@
 <template>
 	<div>
 		<p>Create a Christmas tree and find out if it's valid</p>
-		<h2>Tree Builder</h2>
 		<p>
-			Choose:
+			Choose
 			<button v-on:click="tree.topper = 'star'">&#11088;</button>
 			<button v-on:click="tree.topper = 'angel'">&#128519;</button>
 			<button v-on:click="tree.topper = 'poop'">&#128169;</button>
@@ -93,39 +92,11 @@ export default {
 			gridSize: 40,
 			tree: {
 				"topper": "star",
-				"baubles": [],
-				"tinsels": [
-					[
-						[1, 1.5],
-						[10, 2.5]
-					],
-					[
-						[2, 4.5],
-						[9, 5.5]
-					],
-					[
-						[4, 7.5],
-						[7, 8.5]
-					]
-				],
-				"outline": [
-					[1, 1.5],
-					[4, 4.5],
-					[2, 4.5],
-					[5, 7.5],
-					[4, 7.5],
-					[6, 9.5],
-					[8, 7.5],
-					[7, 7.5],
-					[10, 4.5],
-					[8, 4.5],
-					[11, 1.5]
-				]
+				"baubles": [ [ 8, 7.5 ], [ 4, 7.5 ], [ 2, 4.5 ], [ 1, 1.5 ], [ 11, 1.5 ], [ 10, 4.5 ] ],
+				"tinsels": [ [ [ 1, 1.5 ], [ 10, 2.5 ] ], [ [ 2, 4.5 ], [ 9, 5.5 ] ], [ [ 4, 7.5 ], [ 7, 8.5 ] ] ],
+				"outline": [ [ 1, 1.5 ], [ 4, 4.5 ], [ 2, 4.5 ], [ 5, 7.5 ], [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ], [ 7, 7.5 ], [ 10, 4.5 ], [ 8, 4.5 ], [ 11, 1.5 ] ]
 			},
-			cursor: {
-				x: 1,
-				y: 1
-			},
+			cursor: { x: 1, y: 1 },
 			plottingMode: "tree",
 			renderMode: "canvas",
 			validation: {
