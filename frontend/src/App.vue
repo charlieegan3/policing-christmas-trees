@@ -1,8 +1,9 @@
 <template>
   <div id="app">
+    <h1>Policing Christmas Trees</h1>
     <div>
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link class="router-link" to="/">Tree Builder</router-link>
+      <router-link class="router-link" to="/about">OMG wot iz this site...</router-link>
     </div>
     <router-view :key="$route.fullPath"></router-view>
   </div>
@@ -16,5 +17,17 @@
 }
 .sans-serif {
   font-family: "Montserrat", sans-serif;
+}
+.router-link {
+	padding: 2px 5px;
+	text-decoration: none;
+	border: 1px solid black;
+	margin-right: 5px;
+}
+.router-link:hover {
+	background-color: #eee;
+}
+.router-link-exact-active {
+	border: 4px solid rgb(255, 99, 0);
 }
 </style>

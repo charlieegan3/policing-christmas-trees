@@ -1,29 +1,36 @@
 <template>
 	<div>
-		<h1>Home</h1>
-		<button v-on:click="tree.topper = 'star'">&#11088;</button>
-		<button v-on:click="tree.topper = 'angel'">&#128519;</button>
-		<button v-on:click="tree.topper = 'poop'">&#128169;</button>
-		<button v-on:click="tree.outline = []; tree.tinsels = []">Clear</button>
-		<br/>
-		<button v-on:click="validate">Validate</button>
-		<p v-if="validation.valid">Your tree is allowed</p>
-		<p v-if="validation.valid == false">Your tree is bad</p>
-		<p>{{ validation.status }}</p>
+		<p>Create a Christmas tree and find out if it's valid</p>
+		<h2>Tree Builder</h2>
+		<p>
+			Choose:
+			<button v-on:click="tree.topper = 'star'">&#11088;</button>
+			<button v-on:click="tree.topper = 'angel'">&#128519;</button>
+			<button v-on:click="tree.topper = 'poop'">&#128169;</button>
+		</p>
+		<p>
+			Draw
+			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'tree'}" v-on:click="plottingMode = 'tree'">&#127876; outline</button>
+			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'tinsel'}" v-on:click="plottingMode = 'tinsel'">&#10024; tinsel</button>
+			<button v-bind:class="{ 'ba pa2 bw2 b--orange': plottingMode == 'bauble'}" v-on:click="plottingMode = 'bauble'">&#128302; bauble</button>
+			<button v-on:click="tree.outline = []; tree.tinsels = []; tree.baubles = []">Clear</button>
+			<button v-on:click="validate">Validate</button>
+		</p>
+		<p v-if="validation.status != ''">
+			<img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif">
+			{{ validation.status }}
+		</p>
+		<p v-if="validation.valid">Your tree is <span class="green">good</span></p>
+		<p v-if="validation.valid == false">Your tree is <span class="red">bad</span></p>
 		<ul>
 			<li v-for="message in validation.messages">
 				{{ message }}
 			</li>
 		</ul>
-		<br/>
-		<p>PlotMode: {{ plottingMode }}</p>
-		<button v-on:click="plottingMode = 'tree'">tree</button>
-		<button v-on:click="plottingMode = 'tinsel'">tinsel</button>
-		<button v-on:click="plottingMode = 'bauble'">bauble</button>
-		<br/>
 		<div>
-			<div class="dib fl">
-				<Plotter class="ba"
+			<div>
+				<Plotter v-if="renderMode == 'canvas'"
+					class="ba"
 					:width="height"
 					:height="height"
 					:scaleFactor="gridSize"
@@ -32,9 +39,15 @@
 					@mousemove="updateCursor"
 					@clicked="addPoint"/>
 			</div>
-			<div class="f7 fl">
-				<textarea rows="50">{{ JSON.stringify(this.tree, null, 2) }}</textarea>
+			<div class="f7">
+				<textarea v-if="renderMode == 'json'" rows="50">{{ JSON.stringify(this.tree, null, 2) }}</textarea>
 			</div>
+			<input type="radio" value="json" v-model="renderMode">
+			<label for="json">JSON</label>
+			<br>
+			<input type="radio" value="canvas" v-model="renderMode">
+			<label for="canvas">Canvas</label>
+			<br>
 			<div class="f7 fl">
 				<p>Outline</p>
 				<ul>
@@ -114,6 +127,7 @@ export default {
 				y: 1
 			},
 			plottingMode: "tree",
+			renderMode: "canvas",
 			validation: {
 				valid: null,
 				status: "",
