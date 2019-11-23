@@ -27,8 +27,8 @@ test_baubles_on_outline_point_invalid {
 test_baubles_on_external_outline_points_valid {
 	tree := {
 		"topper": "star",
-		"baubles": [ [ 3, 1.5 ] ], # valid bauble
-		"outline": [ [ 3, 1.5 ], [ 5, 4.5 ], [ 7, 1.5 ] ]
+		"baubles": [ [ 8, 7.5 ] ],
+		"outline": [ [ 4, 7.5 ], [ 6, 9.5 ], [ 8, 7.5 ] ]
 	}
 
 	output := deny with input as tree # need the tree for the outline too

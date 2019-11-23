@@ -20,21 +20,18 @@ deny[message] {
 	# find any bauble
 	bauble := input.baubles[_]
 	# find the point it's on
-	point := outline[i]
+	point := input.outline[i]
 	bauble == point
 
 	# find the adj points in the outline
-	point_before := outline[i-1]
-	point_after := outline[i+1]
-	trace(sprintf("charlie %v", [point_before]))
+	point_before := outline[i]
+	point_after := outline[i+2]
 
-	# find the min x coord, bauble must have this
-	xs := sort([point_before[0], point_after[0], point[0]])
-	trace(sprintf("minx %v", [xs]))
-	trace(sprintf("baubs %v", [bauble]))
+	# find the min y coord, bauble must have this
+	ys := sort([point_before[1], point_after[1], point[1]])
 
-	# the bauble does not have the minimum x coord
-	xs[0] != bauble[0]
+	# the bauble does not have the minimum y coord
+	ys[0] != bauble[1]
 
 	message := "bauble was not on a tree point"
 }
