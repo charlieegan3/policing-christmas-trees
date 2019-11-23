@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="ph2">
-    <h1>Policing Christmas Trees</h1>
+    <h1 class="f3 f2-ns">Policing Christmas Trees</h1>
     <div>
       <router-link class="router-link" to="/">Tree Builder</router-link>
       <router-link class="router-link" to="/about">OMG wot iz this site...</router-link>
