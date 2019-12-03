@@ -16,7 +16,7 @@ deny[message] {
 	max_index := point_count-1
 
 	# find the top of the tree
-	top:= input[round(max_index/2)]
+	top := input[round(max_index/2)]
 
 	# for some index
     some i
