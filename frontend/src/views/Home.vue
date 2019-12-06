@@ -192,7 +192,7 @@ export default {
 		validate: function(value) {
 			this.validation.status = "awaiting validation response";
 			var app = this;
-			axios.post("https://server.xmas-trees.charlieegan3.com/v0/data/tree/main/validate", this.tree)
+			axios.post("/api/v0/data/tree/main/validate", this.tree)
 				.then(function(response) {
 					app.renderResponse(response.data)
 					app.validation.status = "";

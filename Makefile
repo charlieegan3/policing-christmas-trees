@@ -17,4 +17,4 @@ vue_install: vue_image
 	cd frontend && docker run -it -v $$(pwd):/app $(PROJECT)-vue yarn install
 
 vue_serve: vue_install
-	cd frontend && docker run -it -v $$(pwd):/app -p 8080:8080 $(PROJECT)-vue yarn serve
+	cd frontend && docker run -it -v $$(pwd):/app --network="host" $(PROJECT)-vue yarn serve
