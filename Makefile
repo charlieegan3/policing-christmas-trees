@@ -18,3 +18,13 @@ vue_install: vue_image
 
 vue_serve: vue_install
 	cd frontend && docker run -it -v $$(pwd):/app --network="host" $(PROJECT)-vue yarn serve
+
+build_push_all:
+	cd server && docker build -t $(PROJECT)-server:$(TAG) .
+	cd server && docker build -t $(PROJECT)-server:arm-$(TAG) -f Dockerfile.arm .
+	cd frontend && docker build -t $(PROJECT)-frontend:$(TAG) .
+	cd frontend && docker build -t $(PROJECT)-frontend:arm-$(TAG) -f Dockerfile.arm .
+	docker push $(PROJECT)-server:$(TAG)
+	docker push $(PROJECT)-server:arm-$(TAG)
+	docker push $(PROJECT)-frontend:$(TAG)
+	docker push $(PROJECT)-frontend:arm-$(TAG)

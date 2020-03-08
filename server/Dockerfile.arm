@@ -1,0 +1,7 @@
+FROM arm32v7/alpine:3.9
+
+COPY opa /opa
+COPY *.rego /policy/
+
+ENTRYPOINT ["/opa"]
+CMD ["run", "--server", "-a", "0.0.0.0:8081", "/policy", "--log-level=debug"]
