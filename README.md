@@ -9,6 +9,3 @@ for the 2019 _Christmas_ Show & Tell of the
 
 While this is a really dumb idea for a project; I've found it helpful to apply a
 'work thing' in a completely different (if fictional) domain.
-
-You can view a demo of the project at
-[xmas-trees.charlieegan3.com](https://xmas-trees.charlieegan3.com).
