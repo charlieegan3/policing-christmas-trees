@@ -1,14 +1,13 @@
-FROM node:8-jessie as builder
-RUN npm install -g yarn
+FROM node:16-slim as builder
 WORKDIR /build
 
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 FROM nginx:1.13-alpine
 COPY --from=builder /build/dist /usr/share/nginx/html
