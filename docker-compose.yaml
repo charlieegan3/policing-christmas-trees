@@ -10,4 +10,7 @@ services:
       - "8082:80"
   cors_proxy:
     image: redocly/cors-anywhere
-    network_mode: host
+    environment:
+      - PORT=8080
+    ports:
+    - "8083:8080"
