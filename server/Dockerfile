@@ -1,4 +1,4 @@
-FROM openpolicyagent/opa:0.15.1-rootless
+FROM openpolicyagent/opa:0.46.1-rootless
 
 COPY *.rego /policy/
 
