@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  server:
+    build: server
+    ports:
+      - "8081:8081"
+  frontend:
+    build: frontend
+    ports:
+      - "8082:80"
+  cors_proxy:
+    image: redocly/cors-anywhere
+    network_mode: host
