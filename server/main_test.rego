@@ -1,7 +1,5 @@
 package tree.main
 
-import data.test_utils as test
-
 test_validate_returns_flat_list_of_messages {
 	tree := {
 		"topper": "poop",
@@ -11,7 +9,6 @@ test_validate_returns_flat_list_of_messages {
 	}
 
 	output := validate with input as tree
-	trace(sprintf("%v", [concat(",", output["messages"])]))
 	output == {
 		"valid": false,
 		"messages": [
@@ -36,7 +33,6 @@ test_validate_valid_tree {
 	}
 
 	output := validate with input as tree
-	trace(sprintf("%v", [concat(",", output["messages"])]))
 	output == {
 		"valid": true,
 		"messages": [ ]
@@ -58,7 +54,6 @@ test_ensure_message_appears_once {
 	}
 
 	output := validate with input as tree
-	trace(sprintf("%v", [concat(",", output["messages"])]))
 	output == {
 		"valid": false,
 		"messages": ["outline is asymetrical"]

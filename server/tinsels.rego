@@ -10,7 +10,7 @@ deny[message] {
 }
 
 # check tinsels fall within the bound of the outline
-deny[message] {
+deny["tinsel does not start and end on outline"] {
 	# check tinsels
 	some t
 	some p
@@ -29,6 +29,8 @@ deny[message] {
 
 		# we make an assumption that the points are unique
 		outline_point_a != outline_point_b
+
+		outline_point_a[0] - outline_point_b[0] != 0
 
 		# find the gradient of the outline segment
 		gradient := (outline_point_a[1] - outline_point_b[1]) /
@@ -54,6 +56,4 @@ deny[message] {
 
 	# if there are no matches
 	count(segment_matches) == 0
-
-	message := "tinsel does not start and end on outline"
 }

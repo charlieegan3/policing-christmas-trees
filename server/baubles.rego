@@ -1,7 +1,7 @@
 package tree.baubles
 
 # validate the baubles are on a point on the outline
-deny[message] {
+deny["bauble was found off tree outline"] {
 	bauble := input.baubles[_]
 
 	# find all the points of the outline that the bauble is on
@@ -10,12 +10,10 @@ deny[message] {
 		point := input.outline[_]
 		point == bauble
 	}) == 0
-
-	message := "bauble was found off tree outline"
 }
 
 # validate that baubles are at the bottom of points of trees
-deny[message] {
+deny["bauble was not on a tree point"] {
 	# generate an outline which allows wrapping round
 	final_outline_point := input.outline[count(input.outline)-1]
 	outline_with_final_at_start := array.concat([final_outline_point], input.outline)
@@ -36,6 +34,4 @@ deny[message] {
 
 	# the bauble does not have the minimum y coord
 	ys[0] != bauble[1]
-
-	message := "bauble was not on a tree point"
 }

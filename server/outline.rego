@@ -10,7 +10,7 @@ deny[message] {
 
 # validate the outline has points either side that match forming a symetrical
 # shape
-deny[message] {
+deny["outline is asymetrical"] {
 	point_count := count(input)
 	# find the number of points that need to be considered
 	max_index := point_count-1
@@ -38,6 +38,4 @@ deny[message] {
 
 	# if either x or y is invalid
 	{ false } & { valid_y, valid_x } != set()
-
-	message := "outline is asymetrical"
 }
