@@ -2,7 +2,7 @@
 	<div>
 		<p>Create a Christmas tree and find out if it's valid</p>
 		<p>
-			Choose
+			Choose 'tree topper'
 			<button v-on:click="tree.topper = 'star'">&#11088;</button>
 			<button v-on:click="tree.topper = 'angel'">&#128519;</button>
 			<button v-on:click="tree.topper = 'poop'">&#128169;</button>
@@ -19,7 +19,7 @@
 			</button>
 		</p>
 		<div v-if="showExamples">
-			<button v-for="t, name in examples" v-on:click="tree = t">
+			<button v-for="t, name in examples" v-on:click="tree = JSON.parse(JSON.stringify(t))">
 				{{ name }}
 			</button>
 		</div>
@@ -94,7 +94,7 @@ import axios from 'axios';
 export default {
 	name: 'home',
 	created() {
-		this.tree = this.examples.full;
+		this.tree = JSON.parse(JSON.stringify(this.examples.full));
 	},
 	data() {
 		return {

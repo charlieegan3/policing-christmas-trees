@@ -3,7 +3,7 @@
     <h1 class="f3 f2-ns">Policing Christmas Trees</h1>
     <div>
       <router-link class="router-link" to="/">Tree Builder</router-link>
-      <router-link class="router-link" to="/about">OMG wot iz this site...</router-link>
+      <router-link class="router-link" to="/about">About</router-link>
     </div>
     <router-view :key="$route.fullPath"></router-view>
   </div>
